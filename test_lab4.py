@@ -29,6 +29,12 @@ def test_calc_survival_share_basic():
     assert male_0 == 0.0
     assert female_0 == 1.0
 
+    male_1_2 = result.query("Sex == 'male' and SibSp_group == '1–2'")['Survived'].iloc[0]
+    female_1_2 = result.query("Sex == 'female' and SibSp_group == '1–2'")['Survived'].iloc[0]
+    
+    assert male_1_2 == 1.0
+    assert female_1_2 == 1.0
+
 
 #Тест 3: округление %
 def test_survived_percent_rounding():
