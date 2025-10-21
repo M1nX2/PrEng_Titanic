@@ -61,3 +61,18 @@ def test_calc_survival_share_many_siblings():
     })
     result = calc_survival_share(data)
     assert all(result['SibSp_group'] == '>2')
+
+#Тест 5: проверка всех групп
+def test_calc_survival_share_all_groups():
+    data = pd.DataFrame({
+        'Sex': ['male', 'male', 'female', 'female'],
+        'SibSp': [0, 3, 1, 5],
+        'Survived': [1, 0, 1, 0]
+    })
+    result = calc_survival_share(data)
+
+    for sex, sibsp, expected_group in [('male', 0, '0'), ('male', 3, '>2'), 
+                                       ('female', 1, '1–2'), ('female', 5, '>2')]:
+        val = result.query(f"Sex == '{sex}' and SibSp_group == '{expected_group}'")['Survived'].iloc[0]
+        expected = data.query(f"Sex == '{sex}' and SibSp == {sibsp}")['Survived'].mean()
+        assert val == expected
