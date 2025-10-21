@@ -25,7 +25,7 @@ survival_share = (
 )
 survival_share['Survived (%)'] = (survival_share['Survived'] * 100).round(1)
 
-st.title("Лаб3 в5 Руденко")
+st.title("Лаб3(+4) в5 Руденко")
 
 
 selected_group = st.selectbox(
