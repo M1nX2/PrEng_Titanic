@@ -46,10 +46,4 @@ filtered = survival_share[survival_share['SibSp_group'] == selected_group]
 st.write(f"### Доля выживших для SibSp = {selected_group}")
 st.dataframe(filtered)
 
-if st.button("Проверить тесты"):
-    result = pytest.main(["-v", "test_lab4.py"])
-    if result == 0:
-        st.success("Все тесты прошли успешно!")
-    else:
-        st.error("Ошибка: не все тесты прошли.")
 
