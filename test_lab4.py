@@ -38,7 +38,12 @@ def test_survived_percent_rounding():
         'Survived': [0.333, 0.666]
     })
     result = calc_survival_share(data)
-    assert list(result['Survived (%)']) == [33.3, 66.6]
+    
+    male_val = result.loc[result['Sex'] == 'male', 'Survived (%)'].iloc[0]
+    female_val = result.loc[result['Sex'] == 'female', 'Survived (%)'].iloc[0]
+
+    assert male_val == 33.3
+    assert female_val == 66.6
 
 
 #Тест 4: группы '>2'
