@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from streamlit_app.py import sibsp_group, calc_survival_share 
+from streamlit_app import sibsp_group, calc_survival_share 
 
 #Тест 1: категория 
 @pytest.mark.parametrize("sibsp, expected", [
