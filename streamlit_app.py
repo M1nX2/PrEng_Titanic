@@ -22,28 +22,27 @@ def calc_survival_share(df: pd.DataFrame) -> pd.DataFrame:
     survival_share['Survived (%)'] = (survival_share['Survived'] * 100).round(1)
     return survival_share
 
-# Загружаем датасет
-titanic = pd.read_csv(
-    'https://huggingface.co/datasets/ankislyakov/titanic/resolve/main/titanic_train.csv',
-    index_col='PassengerId'
-)
+def load_data() -> pd.DataFrame:
+    return pd.read_csv(
+        'https://huggingface.co/datasets/ankislyakov/titanic/resolve/main/titanic_train.csv',
+        index_col='PassengerId'
+    )
 
-titanic['SibSp_group'] = titanic['SibSp'].apply(sibsp_group)
+def run_app():
+    titanic = load_data()
+    survival_share = calc_survival_share(titanic)
 
-survival_share = calc_survival_share(titanic)
+    st.title("Лаб3(+4) в5 Руденко")
 
-st.title("Лаб3(+4) в5 Руденко")
+    selected_group = st.selectbox(
+        "Выберите количество братьев/сестер:",
+        ['0', '1–2', '>2']
+    )
 
+    filtered = survival_share[survival_share['SibSp_group'] == selected_group]
 
-selected_group = st.selectbox(
-    "Выберите количество братьев/сестер:",
-    ['0', '1–2', '>2']
-)
+    st.write(f"### Доля выживших для SibSp = {selected_group}")
+    st.dataframe(filtered)
 
-
-filtered = survival_share[survival_share['SibSp_group'] == selected_group]
-
-st.write(f"### Доля выживших для SibSp = {selected_group}")
-st.dataframe(filtered)
-
-
+if __name__ == "__main__":
+    run_app()
